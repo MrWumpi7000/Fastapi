@@ -26,7 +26,6 @@ import os
 from starlette.responses import FileResponse
 from fastapi import HTTPException
 import uuid
-from chatapi import router as chatapi
 from fastapi import Header
 from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
