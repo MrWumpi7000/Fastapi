@@ -46,12 +46,12 @@
 
   <!-- Conditional link display based on the logged-in user -->
   <div id="login-link">
-    <a href="http://0.0.0.0:8000/loginhere" class="link">Login</a>
-    <a href="http://0.0.0.0:8000/register" class="link">Register</a>
+    <a href="http:https://mrwumpi.onrender.com/loginhere" class="link">Login</a>
+    <a href="https://mrwumpi.onrender.com/register" class="link">Register</a>
   </div>
   
   <div id="admin-link" style="display:none;">
-    <a href="http://0.0.0.0:8000/admin-page" class="link">Admin Link</a>
+    <a href="https://mrwumpi.onrender.com/admin-page" class="link">Admin Link</a>
   </div>
 
   <!-- AI Fact -->
@@ -69,20 +69,20 @@
   <!-- Profile picture with link to account settings -->
   <div id="profile-picture" onclick="goToAccountSettings()">
     <!-- Default: Grey circle -->
-    <img id="profile-img" src="http://0.0.0.0:8000/grey_circle" alt="Default Profile Picture" style="width: 100%; height: 100%; border-radius: 50%;">
+    <img id="profile-img" src="https://mrwumpi.onrender.com/grey_circle" alt="Default Profile Picture" style="width: 100%; height: 100%; border-radius: 50%;">
   </div>
 
 <script>
   // Function to simulate going to account settings
   function goToAccountSettings() {
-    window.location.href = "http://0.0.0.0:8000/account-settings";
+    window.location.href = "https://mrwumpi.onrender.com/account-settings";
   }
 
   // Function to load user's profile picture and check for admin
   async function loadProfilePicture() {
     try {
       // Fetch the username from the whoami API endpoint
-      const whoamiResponse = await fetch("http://0.0.0.0:8000/whoami");
+      const whoamiResponse = await fetch("https://mrwumpi.onrender.com/whoami");
       const whoamiData = await whoamiResponse.json();
 
       // Check if the response is successful (status code 200)
@@ -98,7 +98,7 @@
         }
 
         // Fetch the profile picture using the username
-        const response = await fetch(`http://0.0.0.0:8000/getProfilePicture/${username}`);
+        const response = await fetch(`https://mrwumpi.onrender.com/getProfilePicture/${username}`);
 
         // Check if the response is successful (status code 200)
         if (response.ok) {
