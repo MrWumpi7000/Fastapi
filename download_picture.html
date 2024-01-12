@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Picture</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Download Picture</h1>
+
+  <form id="download-form">
+    <label for="uuid">Enter UUID:</label>
+    <input type="text" id="uuid" name="uuid" required>
+    <button type="button" onclick="downloadPicture()">Download Picture</button>
+  </form>
+
+  <script>
+    function downloadPicture() {
+      // Get the UUID from the input field
+      var uuid = document.getElementById("uuid").value;
+
+      // Check if the UUID is not empty
+      if (uuid.trim() !== "") {
+        // Request the endpoint with the UUID to download the picture
+        window.location.href = "http://0.0.0.0:8000/download-picture/" + uuid;
+      } else {
+        alert("Please enter a UUID.");
+      }
+    }
+  </script>
+</body>
+</html>

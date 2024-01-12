@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <div id="chat-container">
+        <p id="chat-messages"></p>
+    </div>
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
+<!-- ... (previous HTML code) -->
+
+<script>
+    async function fetchWhoAmI() {
+        try {
+            const response = await fetch("http://0.0.0.0:8000/whoami", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer YOUR_ACCESS_TOKEN",  // Replace with the actual access token
+                },
+            });
+
+            const data = await response.json();
+            return data.email;
+        } catch (error) {
+            console.error("Error fetching whoami:", error);
+            throw error;
+        }
+    }
+
+    async function setupWebSocket() {
+        try {
+            const senderEmail = await fetchWhoAmI();
+            const socket = new WebSocket(`ws://0.0.0.0:8000/chat/receiver_email?sender_email=${sender_email}`);
+            socket.onopen = () => {
+                console.log("WebSocket connection opened.");
+            };
+
+            socket.onmessage = (event) => {
+                const chatMessages = document.getElementById("chat-messages");
+                chatMessages.textContent += event.data + "\n";
+            };
+
+            socket.onclose = (event) => {
+                console.log("WebSocket connection closed:", event);
+            };
+
+            return socket;
+        } catch (error) {
+            console.error("Error setting up WebSocket:", error);
+        }
+    }
+
+    async function sendMessage() {
+        const messageInput = document.getElementById("message-input");
+        const message = messageInput.value;
+
+        if (message.trim() !== "") {
+            const socket = await setupWebSocket();
+            if (socket) {
+                socket.send(message);
+                messageInput.value = "";
+            }
+        }
+    }
+
+    // Initialize the WebSocket connection
+    setupWebSocket();
+</script>
+</body>
+</html>

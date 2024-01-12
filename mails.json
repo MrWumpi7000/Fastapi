@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "email": "ADMIN",
+      "password": "teat",
+      "username": "ADMIN",
+      "picture": "profilepictures/Adminfile"
+    },
+    {
+      "email": "mrwumpi2000@gmail.com",
+      "password": "teat",
+      "username": "MrWumpi3000",
+      "picture": "profilepictures/mrwumpi2000@gmail.comfile"
+    },
+    {
+      "email": "jasper@grevsmuehl.net",
+      "password": "teat",
+      "username": "mrwumpi3000hdud",
+      "picture": "profilepictures/jasper@grevsmuehl.netfile"
+    },
+    {
+      "email": "test@test.net",
+      "password": "test",
+      "username": "1234",
+      "picture": "profilepictures/test@test.netfile"
+    },
+    {
+      "email": "Sven@t.net",
+      "password": "teat",
+      "username": "Sven",
+      "picture": "profilepictures/Sven@t.netfile"
+    },
+    {
+      "email": "R@t.net",
+      "password": "teat",
+      "username": "Rouvi",
+      "picture": "profilepictures/R@t.netfile"
+    }
+  ]
+}

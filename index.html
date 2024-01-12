@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .link {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 30px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #3498db;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+    .social-link {
+      display: inline-block;
+      margin: 10px;
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+    }
+    #profile-picture {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Your Website</h1>
+
+  <!-- Conditional link display based on the logged-in user -->
+  <div id="login-link">
+    <a href="http://0.0.0.0:8000/loginhere" class="link">Login</a>
+    <a href="http://0.0.0.0:8000/register" class="link">Register</a>
+  </div>
+  
+  <div id="admin-link" style="display:none;">
+    <a href="http://0.0.0.0:8000/admin-page" class="link">Admin Link</a>
+  </div>
+
+  <!-- AI Fact -->
+  <div style="margin-top: 30px;">
+    <p>Did you know? Artificial Intelligence is the simulation of human intelligence processes by machines, especially computer systems.</p>
+  </div>
+
+  <!-- Additional social links at the bottom -->
+  <div style="position: fixed; bottom: 10px; left: 10px;">
+    <a href="https://github.com/MrWunpi7000" class="social-link" target="_blank">GitHub</a>
+    <a href="https://www.instagram.com/drohnenidiot56/" class="social-link" target="_blank">Instagram</a>
+    <a href="https://www.youtube.com/c/MrWumpi3000" class="social-link" target="_blank">YouTube</a>
+  </div>
+
+  <!-- Profile picture with link to account settings -->
+  <div id="profile-picture" onclick="goToAccountSettings()">
+    <!-- Default: Grey circle -->
+    <img id="profile-img" src="http://0.0.0.0:8000/grey_circle" alt="Default Profile Picture" style="width: 100%; height: 100%; border-radius: 50%;">
+  </div>
+
+<script>
+  // Function to simulate going to account settings
+  function goToAccountSettings() {
+    window.location.href = "http://0.0.0.0:8000/account-settings";
+  }
+
+  // Function to load user's profile picture and check for admin
+  async function loadProfilePicture() {
+    try {
+      // Fetch the username from the whoami API endpoint
+      const whoamiResponse = await fetch("http://0.0.0.0:8000/whoami");
+      const whoamiData = await whoamiResponse.json();
+
+      // Check if the response is successful (status code 200)
+      if (whoamiData.username) {
+        const username = whoamiData.username;
+
+        // Display the appropriate links based on the logged-in user
+        if (username === "Admin") {
+          document.getElementById("admin-link").style.display = "inline-block";
+          document.getElementById("login-link").style.display = "none"; // Hide login links for admin users
+        } else {
+          document.getElementById("admin-link").style.display = "none"; // Hide admin link for non-admin users
+        }
+
+        // Fetch the profile picture using the username
+        const response = await fetch(`http://0.0.0.0:8000/getProfilePicture/${username}`);
+
+        // Check if the response is successful (status code 200)
+        if (response.ok) {
+          // Convert the image content to a base64 data URL
+          const contentType = response.headers.get("Content-Type");
+          const blob = await response.blob();
+          const imageUrl = `data:${contentType};base64,${await blobToBase64(blob)}`;
+
+          // Set the image source
+          document.getElementById("profile-img").src = imageUrl;
+        } else {
+          console.error("Error loading profile picture. Status:", response.status);
+        }
+      } else {
+        console.error("Error fetching username from whoami API.");
+      }
+    } catch (error) {
+      console.error("Error loading profile picture:", error);
+    }
+  }
+
+  // Function to convert a Blob to base64
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  // Load profile picture when the page loads
+  window.onload = loadProfilePicture;
+</script>
+</body>
+</html>

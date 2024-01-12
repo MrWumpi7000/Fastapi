@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picture Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        header {
+
+            color: #000000;
+            padding: 10px;
+            font-size: 24px;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #generatedKey {
+            margin-top: 20px;
+        }
+        #copyBtn {
+            margin-top: 10px;
+        }
+        footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <header>Picture Upload</header>
+
+    <form action="http://localhost:8000/upload-picture/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit" id="uploadBtn">Upload Picture</button>
+    </form>
+
+    <p id="generatedKey">Generated Key: </p>
+    <button id="copyBtn">Copy UUID</button>
+
+    <footer>
+        <button onclick="location.href='http://localhost:8000/downloadyourpicture'">Download Page</button>
+        <button onclick="location.href='http://localhost:8000/'">Homepage</button>
+        <button onclick="location.href='http://localhost:8000/supportpage'">Support</button>
+    </footer>
+    
+    <script>
+        const uploadBtn = document.getElementById("uploadBtn");
+        const generatedKey = document.getElementById("generatedKey");
+        const copyBtn = document.getElementById("copyBtn");
+
+        uploadBtn.addEventListener("click", async (event) => {
+            event.preventDefault();
+            
+            const form = event.target.closest("form");
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch("http://localhost:8000/upload-picture/", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                generatedKey.textContent = `Generated Key: ${data.uuid}`;
+            } catch (error) {
+                console.error("Error uploading picture:", error);
+            }
+        });
+
+        copyBtn.addEventListener("click", () => {
+            const textarea = document.createElement("textarea");
+            textarea.value = generatedKey.textContent.replace("Generated Key: ", "");
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("UUID copied to clipboard!");
+        });
+    </script>
+</body>
+</html>

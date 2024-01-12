@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Website</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        li {
+            margin: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2077b1;
+        }
+    </style>
+
+<script>
+    async function submitSupportMessage() {
+        // Check if the user is logged in by making a request to the server
+        const isLoggedInResponse = await fetch("http://0.0.0.0:8000/whoami");
+        const isLoggedInData = await isLoggedInResponse.json();
+
+        // If the user is logged in, proceed with submitting the support message
+        if (isLoggedInData.username) {
+        	const username = isLoggedInData.username;
+            const msg = document.getElementById("supportMessage").value; // Move this line here
+            alert("Support Message Submitted:\n\n" + msg);
+
+            // Send the support message to the server
+            const response = await fetch(`http://0.0.0.0:8000/supportapi/${username},${msg}`);
+            const data = await response.json();
+
+            // Display the server response (you can modify this based on your needs)
+            const resultElement = document.getElementById("result");
+            resultElement.innerHTML = JSON.stringify(data, null, 2);
+            console.log(data);
+        } else {
+            // Redirect to the login page
+            window.location.href = "/loginhere";
+        }
+    }
+</script>
+
+</head>
+<body>
+    <h1>Support Center</h1>
+
+    <nav>
+        <ul>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#resources">Resources</a></li>
+        </ul>
+    </nav>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+
+        <h3>Q: What services do you provide?</h3>
+        <p>A: We offer a range of support services to help you with any issues or questions you may have.</p>
+
+        <h3>Q: How do I contact support?</h3>
+        <p>A: You can contact our support team through the "Contact Us" section on our website.</p>
+
+        <h3>Q: Are there any fees for your support services?</h3>
+        <p>A: Our basic support services are free of charge. However, for premium support, there may be additional fees.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Feel free to leave us a message below:</p>
+
+        <textarea id="supportMessage" placeholder="Type your support message here..."></textarea>
+
+        <button onclick="submitSupportMessage()">Submit</button>
+    </section>
+
+    <!-- You can add the result element wherever you want to display the server response -->
+    <div id="result"></div>
+</body>
+</html>
