@@ -61,7 +61,7 @@
     async function checkAdmin() {
       try {
         // Fetch user information from the whoami API endpoint
-        const whoamiResponse = await fetch("http://0.0.0.0:8000/whoami");
+        const whoamiResponse = await fetch("https://mrwumpi.onrender.com/whoami");
         const whoamiData = await whoamiResponse.json();
 
         // Check if the user is an admin
@@ -81,7 +81,7 @@
     async function loadSupportMessage() {
       try {
         // Fetch the current support message
-        const response = await fetch("http://0.0.0.0:8000/get_support_message/1");
+        const response = await fetch("https://mrwumpi.onrender.com/get_support_message/1");
 
         // Check if the response is successful (status code 200)
         if (response.ok) {
@@ -107,7 +107,7 @@
     // Function to delete the first support message
     async function deleteMessage() {
       try {
-        const deleteResponse = await fetch("http://0.0.0.0:8000/delete_support_message/1", {
+        const deleteResponse = await fetch("https://mrwumpi.onrender.com/delete_support_message/1", {
           method: 'DELETE',
         });
 
@@ -135,7 +135,7 @@
 
       try {
         // Fetch the recipient's email from the support message
-        const response = await fetch("http://0.0.0.0:8000/get_support_message/1");
+        const response = await fetch("https://mrwumpi.onrender.com/get_support_message/1");
         const message = await response.text();
         const recipientEmail = extractRecipientEmail(message);
 
@@ -143,7 +143,7 @@
         const messageContent = document.getElementById("message-content").value;
 
         // Send the message to the server
-        const sendMessageResponse = await fetch("http://0.0.0.0:8000/send_message", {
+        const sendMessageResponse = await fetch("https://mrwumpi.onrender.com//send_message", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
