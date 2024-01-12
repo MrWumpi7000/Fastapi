@@ -73,7 +73,7 @@
 </head>
 <body>
     <h1 id="test">Login</h1>
-    <form id="loginForm" action="http://0.0.0.0:8000/login/{email_id},{password_id}" method="get">
+    <form id="loginForm" action="https://mrwumpi.onrender.com/login/{email_id},{password_id}" method="get">
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" required>
 
@@ -87,7 +87,7 @@
         <button type="button" onclick="submitForm()">Submit</button>
     </form>
 
-    <a href="http://0.0.0.0:8000/register">Sign up!</a>
+    <a href="https://mrwumpi.onrender.com/register">Sign up!</a>
     <p id="result"></p>
 
     <script>
@@ -97,7 +97,7 @@
             const rememberMe = document.getElementById("remember-me").checked;
 
             // Update the URL based on the "Remember Me" checkbox
-            const url = `http://0.0.0.0:8000/login/${email},${password}?remember_me=${rememberMe}`;
+            const url = `https://mrwumpi.onrender.com/login/${email},${password}?remember_me=${rememberMe}`;
 
             const response = await fetch(url);
             const data = await response.json();
