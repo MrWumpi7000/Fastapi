@@ -55,7 +55,7 @@
 <body>
     <header>Picture Upload</header>
 
-    <form action="http://localhost:8000/upload-picture/" method="post" enctype="multipart/form-data">
+    <form action="https://mrwumpi.onrender.com/upload-picture/" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit" id="uploadBtn">Upload Picture</button>
     </form>
@@ -64,9 +64,9 @@
     <button id="copyBtn">Copy UUID</button>
 
     <footer>
-        <button onclick="location.href='http://localhost:8000/downloadyourpicture'">Download Page</button>
-        <button onclick="location.href='http://localhost:8000/'">Homepage</button>
-        <button onclick="location.href='http://localhost:8000/supportpage'">Support</button>
+        <button onclick="location.href='https://mrwumpi.onrender.com/downloadyourpicture'">Download Page</button>
+        <button onclick="location.href='https://mrwumpi.onrender.com/'">Homepage</button>
+        <button onclick="location.href='https://mrwumpi.onrender.com/supportpage'">Support</button>
     </footer>
     
     <script>
@@ -81,7 +81,7 @@
             const formData = new FormData(form);
             
             try {
-                const response = await fetch("http://localhost:8000/upload-picture/", {
+                const response = await fetch("https://mrwumpi.onrender.com/upload-picture/", {
                     method: "POST",
                     body: formData
                 });
