@@ -515,7 +515,7 @@ async def send_message(recipient_email: str = Form(...), message_content: str = 
 
 origins = ["*"]  # Replace with the actual origins of your front-end.
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def save_uploaded_file(file: UploadFile, filename: str):
