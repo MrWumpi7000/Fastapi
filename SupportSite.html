@@ -92,7 +92,7 @@
 <script>
     async function submitSupportMessage() {
         // Check if the user is logged in by making a request to the server
-        const isLoggedInResponse = await fetch("http://0.0.0.0:8000/whoami");
+        const isLoggedInResponse = await fetch("https://mrwumpi.onrender.com/whoami");
         const isLoggedInData = await isLoggedInResponse.json();
 
         // If the user is logged in, proceed with submitting the support message
@@ -102,7 +102,7 @@
             alert("Support Message Submitted:\n\n" + msg);
 
             // Send the support message to the server
-            const response = await fetch(`http://0.0.0.0:8000/supportapi/${username},${msg}`);
+            const response = await fetch(`https://mrwumpi.onrender.com/supportapi/${username},${msg}`);
             const data = await response.json();
 
             // Display the server response (you can modify this based on your needs)
